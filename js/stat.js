@@ -31,8 +31,7 @@ function renderColumm(ctx, x, y, height, color) {
 function getMaxElement(arr) {
   var currentArray = arr.map(function (elem) {
     return (typeof elem === 'number') ? elem : 0;
-  }
-  );
+  });
   return Math.round(Math.max.apply(null, currentArray));
 }
 
@@ -41,16 +40,25 @@ function getColor(player) {
   return (player === 'Вы') ? 'rgba(255, 0, 0, 1)' : 'hsla' + '(207, 100%, 44%, ' + randomNumber + ')';
 }
 
+function renderCloud(ctx, x, y) {
+  renderShape(ctx, x + 10, y + 10, 'rgba(0, 0, 0, 0.7)');
+  renderShape(ctx, x, y, '#fff');
+}
+
 window.renderStatistics = function (ctx, players, times) {
   var maxTime = getMaxElement(times);
-  renderShape(ctx, X_FOR_SHAPE + 10, Y_FOR_SHAPE + 10, 'rgba(0, 0, 0, 0.7)');
-  renderShape(ctx, X_FOR_SHAPE, Y_FOR_SHAPE, '#fff');
+
+  renderCloud(ctx, X_FOR_SHAPE, Y_FOR_SHAPE);
   renderText(ctx, 'Ура вы победили!', FONT, '#000', X_FOR_SHAPE + CLOUD_WIDTH / 2, Y_FOR_SHAPE * 2, 'center');
   renderText(ctx, 'Список результатов:', FONT, '#000', X_FOR_SHAPE + CLOUD_WIDTH / 2, Y_FOR_SHAPE * 2 + GAP, 'center');
 
   for (var i = 0; i < players.length; i++) {
     var currentTime = Math.round(times[i]);
-    renderColumm(ctx, X_FOR_SHAPE + COLUMM_GAP + (COLUMM_GAP + COLUMM_WIDTH) * i, Y_FOR_SHAPE + (BAR_HEIGHT - (BAR_HEIGHT * currentTime / maxTime)) + GAP * 3, BAR_HEIGHT * currentTime / maxTime, getColor(players[i]));
-    renderText(ctx, players[i], FONT, '#000', X_FOR_SHAPE + COLUMM_GAP + (COLUMM_GAP + COLUMM_WIDTH) * i, BAR_HEIGHT + GAP * 4, 'left');
+    var colummHeight = BAR_HEIGHT * currentTime / maxTime;
+    var colummX = X_FOR_SHAPE + COLUMM_GAP + (COLUMM_GAP + COLUMM_WIDTH) * i;
+    var coluumY = Y_FOR_SHAPE + (BAR_HEIGHT - colummHeight) + GAP * 3;
+
+    renderColumm(ctx, colummX, coluumY, colummHeight, getColor(players[i]));
+    renderText(ctx, players[i], FONT, '#000', colummX, BAR_HEIGHT + GAP * 4, 'left');
   }
 };
