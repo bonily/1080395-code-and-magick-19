@@ -58,8 +58,8 @@ window.renderStatistics = function (ctx, players, times) {
     var colummX = X_FOR_SHAPE + COLUMM_GAP + (COLUMM_GAP + COLUMM_WIDTH) * i;
     var colummY = Y_FOR_SHAPE + (BAR_HEIGHT - colummHeight) + GAP * 4;
 
-    renderText(ctx, colummX, colummY - GAP, Math.round((times[i]) / 10) / 100 + 'с',  FONT, '#000', 'left');
+    renderText(ctx, colummX, colummY - GAP, Math.round((times[i]) / 10) / 100 + 'с', FONT, '#000', 'left');
     renderColumm(ctx, colummX, colummY, colummHeight, getColor(players[i]));
-    renderText(ctx, colummX, BAR_HEIGHT + GAP * 5, players[i],  FONT, '#000', 'left');
+    renderText(ctx, colummX, BAR_HEIGHT + GAP * 5, players[i], FONT, '#000', 'left');
   }
 };
