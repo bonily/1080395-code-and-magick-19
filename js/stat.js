@@ -15,7 +15,7 @@ function renderShape(ctx, x, y, color) {
   ctx.fillRect(x, y, CLOUD_WIDTH, CLOUD_HEIGHT);
 }
 
-function renderText(ctx, text, font, color, x, y, textAlign) {
+function renderText(ctx, x, y, text, font, color, textAlign) {
   ctx.fillStyle = color;
   ctx.font = font;
   ctx.textAlign = textAlign;
@@ -49,16 +49,17 @@ window.renderStatistics = function (ctx, players, times) {
   var maxTime = getMaxElement(times);
 
   renderCloud(ctx, X_FOR_SHAPE, Y_FOR_SHAPE);
-  renderText(ctx, 'Ура вы победили!', FONT, '#000', X_FOR_SHAPE + CLOUD_WIDTH / 2, Y_FOR_SHAPE * 2, 'center');
-  renderText(ctx, 'Список результатов:', FONT, '#000', X_FOR_SHAPE + CLOUD_WIDTH / 2, Y_FOR_SHAPE * 2 + GAP, 'center');
+  renderText(ctx, X_FOR_SHAPE + CLOUD_WIDTH / 2, Y_FOR_SHAPE * 2, 'Ура вы победили!', FONT, '#000', 'center');
+  renderText(ctx, X_FOR_SHAPE + CLOUD_WIDTH / 2, Y_FOR_SHAPE * 2 + GAP, 'Список результатов:', FONT, '#000', 'center');
 
   for (var i = 0; i < players.length; i++) {
     var currentTime = Math.round(times[i]);
     var colummHeight = BAR_HEIGHT * currentTime / maxTime;
     var colummX = X_FOR_SHAPE + COLUMM_GAP + (COLUMM_GAP + COLUMM_WIDTH) * i;
-    var coluumY = Y_FOR_SHAPE + (BAR_HEIGHT - colummHeight) + GAP * 3;
+    var colummY = Y_FOR_SHAPE + (BAR_HEIGHT - colummHeight) + GAP * 4;
 
-    renderColumm(ctx, colummX, coluumY, colummHeight, getColor(players[i]));
-    renderText(ctx, players[i], FONT, '#000', colummX, BAR_HEIGHT + GAP * 4, 'left');
+    renderText(ctx, colummX, colummY - GAP, Math.round((times[i]) / 10) / 100 + 'с',  FONT, '#000', 'left');
+    renderColumm(ctx, colummX, colummY, colummHeight, getColor(players[i]));
+    renderText(ctx, colummX, BAR_HEIGHT + GAP * 5, players[i],  FONT, '#000', 'left');
   }
 };
