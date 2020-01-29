@@ -39,15 +39,23 @@ function createPlayer() {
 }
 
 function createSimilarList(wizards) {
-  return wizards.map(function createWizard(obj) {
-    var wizardElement = similarWizardTemplate.cloneNode(true);
-    wizardElement.querySelector('.setup-similar-label').textContent = obj.name + ' ' + obj.surname;
-    wizardElement.querySelector('.wizard-coat').style.fill = obj.coatcolor;
-    wizardElement.querySelector('.wizard-eyes').style.fill = obj.eyesColor;
-    return wizardElement;
-  });
+  return wizards.map(createWizard);
 }
 
-for (var i = 0; i < players.length; i++) {
-  similarListElement.appendChild(similarList[i]);
+function createWizard(obj) {
+  var wizardElement = similarWizardTemplate.cloneNode(true);
+  wizardElement.querySelector('.setup-similar-label').textContent = obj.name + ' ' + obj.surname;
+  wizardElement.querySelector('.wizard-coat').style.fill = obj.coatcolor;
+  wizardElement.querySelector('.wizard-eyes').style.fill = obj.eyesColor;
+  return wizardElement;
 }
+
+function renderWizards() {
+  var wizardsContainer = document.createDocumentFragment();
+  for (var i = 0; i < players.length; i++) {
+    wizardsContainer.appendChild(similarList[i]);
+  }
+  return wizardsContainer;
+}
+
+similarListElement.appendChild(renderWizards());
